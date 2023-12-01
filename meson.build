@@ -9,58 +9,28 @@ project('advent-of-code', 'cpp',
   ],
 )
 
-gtest_dep = dependency('gtest')
+gtest_dep = dependency('gtest', include_type: 'system')
 
 inc = include_directories('include')
 
-executable('day01-naive',
-  sources: ['src/common.cpp', 'src/day01.cpp', 'src/day01-naive.cpp'],
-  include_directories: inc,
-)
+day01_impls = ['naive', 'no-string-conversion', 'no-split', 'array-over-map', 'better-letters-check']
 
-day01_naive_test = executable('test-day01-naive',
-  sources: ['src/common.cpp', 'test/day01.cpp', 'src/day01-naive.cpp'],
-  include_directories: inc,
-  dependencies: [gtest_dep],
-)
+foreach impl : day01_impls
+  executable('day01-' + impl,
+    sources: ['src/common.cpp', 'src/day01/main.cpp', 'src/day01/' + impl +'.cpp'],
+    include_directories: inc,
+    override_options: [
+      'buidtype=release',
+    ]
+  )
 
-test('test day01-naive', day01_naive_test)
+  test('test day01-' + impl,
+    executable('test-day01-' + impl,
+      sources: ['src/common.cpp', 'test/day01.cpp', 'src/day01/' + impl + '.cpp'],
+      include_directories: inc,
+      dependencies: [gtest_dep],
+    ),
+    suite: 'day01',
+    protocol: 'gtest')
+endforeach
 
-executable('day01-no-string-conversion',
-  sources: ['src/common.cpp', 'src/day01.cpp', 'src/day01-no-string-conversion.cpp'],
-  include_directories: inc,
-)
-
-day01_no_string_conversion_test = executable('test-day01-no-string-conversion',
-  sources: ['src/common.cpp', 'test/day01.cpp', 'src/day01-no-string-conversion.cpp'],
-  include_directories: inc,
-  dependencies: [gtest_dep],
-)
-
-test('test day01-no-string-conversion', day01_no_string_conversion_test)
-
-executable('day01-no-split',
-  sources: ['src/common.cpp', 'src/day01.cpp', 'src/day01-no-split.cpp'],
-  include_directories: inc,
-)
-
-day01_no_split_test = executable('test-day01-no-split',
-  sources: ['src/common.cpp', 'test/day01.cpp', 'src/day01-no-split.cpp'],
-  include_directories: inc,
-  dependencies: [gtest_dep],
-)
-
-test('test day01-no-split', day01_no_split_test)
-
-executable('day01-array-over-map',
-  sources: ['src/common.cpp', 'src/day01.cpp', 'src/day01-array-over-map.cpp'],
-  include_directories: inc,
-)
-
-day01_array_over_map_test = executable('test-day01-array-over-map',
-  sources: ['src/common.cpp', 'test/day01.cpp', 'src/day01-array-over-map.cpp'],
-  include_directories: inc,
-  dependencies: [gtest_dep],
-)
-
-test('test day01-array-over-map', day01_array_over_map_test)

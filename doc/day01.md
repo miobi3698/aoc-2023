@@ -119,3 +119,39 @@ Summary
     1.69 ± 0.23 times faster than ./build/day01-no-string-conversion
     1.74 ± 0.24 times faster than ./build/day01-naive
 ```
+
+### Optimisation 4 - Better letters check
+
+For problem 2, we can reduce the cost of digits letters checks by:
+- Replace substr with string_view, substr construct a new string but we only need to do comparison
+- Check for first letter first before going with full string check
+
+```bash
+$ hyperfine --warmup 10 --shell=none ./build/day01-naive ./build/day01-no-string-conversion ./build/day01-no-split ./build/day01-array-over-map ./build/day01-better-letters-check
+Benchmark 1: ./build/day01-naive
+  Time (mean ± σ):      16.2 ms ±   1.7 ms    [User: 14.8 ms, System: 1.3 ms]
+  Range (min … max):    14.8 ms …  27.1 ms    174 runs
+
+Benchmark 2: ./build/day01-no-string-conversion
+  Time (mean ± σ):      15.4 ms ±   2.0 ms    [User: 14.6 ms, System: 0.7 ms]
+  Range (min … max):    13.6 ms …  27.0 ms    212 runs
+
+Benchmark 3: ./build/day01-no-split
+  Time (mean ± σ):      14.2 ms ±   1.4 ms    [User: 13.4 ms, System: 0.7 ms]
+  Range (min … max):    12.6 ms …  23.6 ms    227 runs
+
+Benchmark 4: ./build/day01-array-over-map
+  Time (mean ± σ):       8.9 ms ±   1.0 ms    [User: 8.2 ms, System: 0.7 ms]
+  Range (min … max):     8.2 ms …  13.8 ms    229 runs
+
+Benchmark 5: ./build/day01-better-letters-check
+  Time (mean ± σ):       5.1 ms ±   0.7 ms    [User: 4.5 ms, System: 0.5 ms]
+  Range (min … max):     4.8 ms …   9.7 ms    601 runs
+
+Summary
+  ./build/day01-better-letters-check ran
+    1.74 ± 0.30 times faster than ./build/day01-array-over-map
+    2.78 ± 0.45 times faster than ./build/day01-no-split
+    3.00 ± 0.55 times faster than ./build/day01-no-string-conversion
+    3.17 ± 0.53 times faster than ./build/day01-naive
+```
