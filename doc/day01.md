@@ -88,3 +88,34 @@ Summary
     1.07 ± 0.10 times faster than ./build/day01-no-string-conversion
     1.08 ± 0.09 times faster than ./build/day01-naive
 ```
+
+### Optimisation 3 - Array over map
+
+For problem 2, swap out the map of digit letters to using array to:
+- Avoid runtime construction of map, can create array in constexpr
+- We iterate over the map anyway so no need to pay for lookup
+
+```bash
+$ hyperfine --warmup 10 ./build/day01-naive ./build/day01-no-string-conversion ./build/day01-no-split ./build/day01-array-over-map
+Benchmark 1: ./build/day01-naive
+  Time (mean ± σ):      15.4 ms ±   1.2 ms    [User: 14.5 ms, System: 1.1 ms]
+  Range (min … max):    14.1 ms …  20.5 ms    183 runs
+
+Benchmark 2: ./build/day01-no-string-conversion
+  Time (mean ± σ):      14.9 ms ±   1.1 ms    [User: 14.2 ms, System: 1.0 ms]
+  Range (min … max):    13.6 ms …  18.7 ms    184 runs
+
+Benchmark 3: ./build/day01-no-split
+  Time (mean ± σ):      14.2 ms ±   1.1 ms    [User: 13.6 ms, System: 0.9 ms]
+  Range (min … max):    12.7 ms …  18.8 ms    189 runs
+
+Benchmark 4: ./build/day01-array-over-map
+  Time (mean ± σ):       8.9 ms ±   1.0 ms    [User: 8.3 ms, System: 0.8 ms]
+  Range (min … max):     7.7 ms …  12.8 ms    315 runs
+
+Summary
+  ./build/day01-array-over-map ran
+    1.61 ± 0.22 times faster than ./build/day01-no-split
+    1.69 ± 0.23 times faster than ./build/day01-no-string-conversion
+    1.74 ± 0.24 times faster than ./build/day01-naive
+```

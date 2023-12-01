@@ -51,3 +51,16 @@ day01_no_split_test = executable('test-day01-no-split',
 )
 
 test('test day01-no-split', day01_no_split_test)
+
+executable('day01-array-over-map',
+  sources: ['src/common.cpp', 'src/day01.cpp', 'src/day01-array-over-map.cpp'],
+  include_directories: inc,
+)
+
+day01_array_over_map_test = executable('test-day01-array-over-map',
+  sources: ['src/common.cpp', 'test/day01.cpp', 'src/day01-array-over-map.cpp'],
+  include_directories: inc,
+  dependencies: [gtest_dep],
+)
+
+test('test day01-array-over-map', day01_array_over_map_test)
