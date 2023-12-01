@@ -13,7 +13,13 @@ gtest_dep = dependency('gtest', include_type: 'system')
 
 inc = include_directories('include')
 
-day01_impls = ['naive', 'no-string-conversion', 'no-split', 'array-over-map', 'better-letters-check']
+day01_impls = [
+  'naive',
+  'no-string-conversion',
+  'no-split',
+  'array-over-map',
+  'better-letters-check',
+]
 
 foreach impl : day01_impls
   executable('day01-' + impl,
