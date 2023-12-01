@@ -155,3 +155,41 @@ Summary
     3.00 ± 0.55 times faster than ./build/day01-no-string-conversion
     3.17 ± 0.53 times faster than ./build/day01-naive
 ```
+
+### Optimisation 5 - Remove digits list
+
+We only need the first and last digits, not the whole list
+```bash
+$ hyperfine --warmup 10 --shell=none ./build/day01-naive ./build/day01-no-string-conversion ./build/day01-no-split ./build/day01-array-over-map ./build/day01-better-letters-check ./build/day01-remove-digits-list
+Benchmark 1: ./build/day01-naive
+  Time (mean ± σ):      16.1 ms ±   1.8 ms    [User: 15.0 ms, System: 1.0 ms]
+  Range (min … max):    14.6 ms …  30.5 ms    205 runs
+
+Benchmark 2: ./build/day01-no-string-conversion
+  Time (mean ± σ):      15.5 ms ±   2.5 ms    [User: 14.5 ms, System: 0.8 ms]
+  Range (min … max):    13.6 ms …  25.8 ms    214 runs
+
+Benchmark 3: ./build/day01-no-split
+  Time (mean ± σ):      14.3 ms ±   2.3 ms    [User: 13.5 ms, System: 0.7 ms]
+  Range (min … max):    12.6 ms …  26.5 ms    218 runs
+
+Benchmark 4: ./build/day01-array-over-map
+  Time (mean ± σ):       8.8 ms ±   0.9 ms    [User: 8.0 ms, System: 0.7 ms]
+  Range (min … max):     8.0 ms …  15.2 ms    290 runs
+
+Benchmark 5: ./build/day01-better-letters-check
+  Time (mean ± σ):       5.1 ms ±   0.6 ms    [User: 4.5 ms, System: 0.5 ms]
+  Range (min … max):     4.8 ms …   9.2 ms    606 runs
+
+Benchmark 6: ./build/day01-remove-digits-list
+  Time (mean ± σ):       4.9 ms ±   0.9 ms    [User: 4.3 ms, System: 0.5 ms]
+  Range (min … max):     4.5 ms …   9.2 ms    613 runs
+
+Summary
+  ./build/day01-remove-digits-list ran
+    1.03 ± 0.22 times faster than ./build/day01-better-letters-check
+    1.79 ± 0.36 times faster than ./build/day01-array-over-map
+    2.90 ± 0.69 times faster than ./build/day01-no-split
+    3.14 ± 0.75 times faster than ./build/day01-no-string-conversion
+    3.27 ± 0.68 times faster than ./build/day01-naive
+```

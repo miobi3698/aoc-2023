@@ -19,6 +19,7 @@ day01_impls = [
   'no-split',
   'array-over-map',
   'better-letters-check',
+  'remove-digits-list',
 ]
 
 foreach impl : day01_impls
