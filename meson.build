@@ -38,3 +38,16 @@ day01_no_string_conversion_test = executable('test-day01-no-string-conversion',
 )
 
 test('test day01-no-string-conversion', day01_no_string_conversion_test)
+
+executable('day01-no-split',
+  sources: ['src/common.cpp', 'src/day01.cpp', 'src/day01-no-split.cpp'],
+  include_directories: inc,
+)
+
+day01_no_split_test = executable('test-day01-no-split',
+  sources: ['src/common.cpp', 'test/day01.cpp', 'src/day01-no-split.cpp'],
+  include_directories: inc,
+  dependencies: [gtest_dep],
+)
+
+test('test day01-no-split', day01_no_split_test)
