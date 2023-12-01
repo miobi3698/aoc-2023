@@ -12,7 +12,7 @@ Then calculate the sum of it.
 ### Solution 1 - Naive way
 
 Split the input into lines.
-Filter the digits to for a number list.
+Filter the line to for a digit list.
 Pick the first and last digit to for a number string.
 Convert the string to number.
 Sum all of the numbers.
@@ -36,3 +36,25 @@ Filter the digits or digit letters to for a number list.
 Pick the first and last digit to for a number string.
 Convert the string to number.
 Sum all of the numbers.
+
+## Optimisation 1 - No string conversion
+
+Instead of create a string from first and last digit then convert to number, calculate the number by:
+- Convert the digit to number
+- number = first * 10 + second
+
+```bash
+$ hyperfine --warmup 3 ./build/day01-naive ./build/day01-no-string-conversion
+Benchmark 1: ./build/day01-naive
+  Time (mean ± σ):      15.2 ms ±   1.0 ms    [User: 14.5 ms, System: 0.9 ms]
+  Range (min … max):    14.0 ms …  20.2 ms    190 runs
+
+Benchmark 2: ./build/day01-no-string-conversion
+  Time (mean ± σ):      14.7 ms ±   0.9 ms    [User: 14.1 ms, System: 0.9 ms]
+  Range (min … max):    13.4 ms …  18.6 ms    185 runs
+
+Summary
+  ./build/day01-no-string-conversion ran
+    1.03 ± 0.09 times faster than ./build/day01-naive
+```
+
