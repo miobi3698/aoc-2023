@@ -13,31 +13,38 @@ gtest_dep = dependency('gtest', include_type: 'system')
 
 inc = include_directories('include')
 
-day01_impls = [
-  'naive',
-  'no-string-conversion',
-  'no-split',
-  'array-over-map',
-  'better-letters-check',
-  'remove-digits-list',
-]
+days = {
+  'day01': [
+    'naive',
+    'no-string-conversion',
+    'no-split',
+    'array-over-map',
+    'better-letters-check',
+    'remove-digits-list',
+  ],
+  'day02': [
+    'naive',
+  ],
+}
 
-foreach impl : day01_impls
-  executable('day01-' + impl,
-    sources: ['src/common.cpp', 'src/day01/main.cpp', 'src/day01/' + impl +'.cpp'],
-    include_directories: inc,
-    override_options: [
-      'buidtype=release',
-    ]
-  )
-
-  test('test day01-' + impl,
-    executable('test-day01-' + impl,
-      sources: ['src/common.cpp', 'test/day01.cpp', 'src/day01/' + impl + '.cpp'],
+foreach day, impls : days
+  foreach impl : impls
+    executable(day + '-' + impl,
+      sources: ['src/common.cpp', 'src/' + day + '/main.cpp', 'src/' + day + '/' + impl +'.cpp'],
       include_directories: inc,
-      dependencies: [gtest_dep],
-    ),
-    suite: 'day01',
-    protocol: 'gtest')
+      override_options: [
+        'buidtype=release',
+      ]
+    )
+
+    test('test ' + day + '-' + impl,
+      executable('test-' + day + '-' + impl,
+        sources: ['src/common.cpp', 'test/' + day + '.cpp', 'src/' + day + '/' + impl + '.cpp'],
+        include_directories: inc,
+        dependencies: [gtest_dep],
+      ),
+      suite: day,
+      protocol: 'gtest')
+  endforeach
 endforeach
 
